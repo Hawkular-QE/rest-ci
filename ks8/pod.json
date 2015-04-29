@@ -1,0 +1,52 @@
+{
+  "id": "hawk-rest-smoke",
+  "kind": "Pod",
+  "apiVersion": "v1beta1",
+  "desiredState": {
+    "manifest": {
+      "version": "v1beta1",
+      "id": "hawkular1",
+      "containers": [{
+        "name": "hawkular-snapshot",
+        "image": "hawkular/hawkular:latest",
+        "imagePullPolicy": "PullAlways",
+        "ports": [
+          {"name": "metrics-endpoint", "containerPort": 8080}
+          ]
+      },
+	  {
+	    "name": "hawkular-test",
+	    "image": "hawkularqe/java-client:latest",
+	    "imagePullPolicy": "PullAlways",
+	    "env": [
+	     {
+		  "name": "WAIT_TRIES",
+		  "value": "50"
+	     }],
+        "volumeMounts": [{
+          "name": "results",
+          "mountPath": "/opt/hawkular-java-client"
+        }]
+	  },
+      {
+        "name": "hawkular-test-web",
+        "image": "nginx",
+        "ports": [
+          {"name": "results-web", "containerPort": 80}
+          ],
+        "volumeMounts": [{
+          "name": "results",
+          "mountPath": "/var/www/html"
+        }]
+       }
+       ],
+       "volumes": [{
+         "name": "results",
+         "emptyDir": {}
+       }]
+    }
+  },
+  "labels": {
+    "name": "hawk-rest-smoke"
+  }
+}

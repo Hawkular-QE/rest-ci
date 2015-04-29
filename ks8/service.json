@@ -1,0 +1,11 @@
+{
+  "id": "rest-ci1",
+  "kind": "Service",
+  "apiVersion": "v1beta1",
+  "port": 58080,
+  "containerPort": metrics-endpoint,
+  "selector": {
+    "name": "hawkular-rest-smoke"
+  },
+  "publicIPs": ["172.18.17.18"] 
+}
