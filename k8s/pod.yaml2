@@ -1,0 +1,41 @@
+kind: Pod
+apiVersion: v1beta3
+spec:  
+    containers: 
+    -   name: hawkular-ci1
+        image: hawkular/hawkular:latest
+        imagePullPolicy: Always
+        ports: 
+        -   name: metrics-endpoint
+            containerPort: 8080
+    - 
+      name: "hawkular-rest-ci1"
+      image: "hawkularqe/java-client:latest"
+      imagePullPolicy: "PullAlways"
+      env: 
+        - 
+          name: "WAIT_TRIES"
+          value: "50"
+      volumeMounts: 
+        - 
+          name: "results"
+          mountPath: "/opt/hawkular-java-client/target/surefire-reports"
+    - 
+      name: "results-web-ci1"
+      image: "nginx"
+      ports: 
+        - 
+          name: "results-web"
+          containerPort: 80
+      volumeMounts: 
+        - 
+          name: "results"
+          mountPath: "/usr/share/nginx/html"
+  volumes: 
+    - 
+      name: "results"
+          source: 
+            hostDir: 
+              path: "/var/hawkular-ci-smoke/rest"
+  metadata: 
+    name: hawk-smoke-ci1

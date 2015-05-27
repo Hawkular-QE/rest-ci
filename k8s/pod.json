@@ -1,0 +1,55 @@
+{
+  "id": "hawk-smoke-ci1",
+  "kind": "Pod",
+  "apiVersion": "v1beta1",
+  "desiredState": {
+    "manifest": {
+      "version": "v1beta1",
+      "id": "hawkular1",
+	  "restartPolicy": {
+      	"OnFailure": {}
+      },
+      "containers": [{
+        "name": "hawkular-ci1",
+        "image": "hawkular/hawkular:latest",
+        "imagePullPolicy": "PullAlways",
+        "ports": [
+          {"name": "metrics-endpoint", "containerPort": 8080}
+          ]
+      },
+	  {
+	    "name": "hawkular-rest-ci1",
+	    "image": "hawkularqe/java-client:latest",
+	    "imagePullPolicy": "PullAlways",
+	    "env": [
+	     {
+		  "name": "WAIT_TRIES",
+		  "value": "50"
+	     }],
+        "volumeMounts": [{
+          "name": "results",
+          "mountPath": "/opt/hawkular-java-client/target/surefire-reports"
+        }]
+	  },
+      {
+        "name": "results-web-ci1",
+        "image": "nginx",
+        "ports": [
+          {"name": "results-web", "containerPort": 80}
+          ],
+        "volumeMounts": [{
+          "name": "results",
+          "mountPath": "/usr/share/nginx/html"
+        }]
+       }
+       ],
+       "volumes": [{
+         "name": "results",
+	     "source":{"hostDir":{"path":"/var/hawkular-ci-smoke/rest"}}
+       }]
+    }
+  },
+  "labels": {
+    "name": "hawk-smoke-ci1"
+  }
+}

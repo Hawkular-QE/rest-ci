@@ -1,0 +1,16 @@
+apiVersion: v1beta3
+kind: Service
+metadata:
+  name: hawk-smoke-ci1
+  labels:
+    name: hawk
+spec: 
+    ports:
+        - port: 38080
+          targetPort: hawkular-web
+          protocol: TCP
+    selector:
+        app: hawk
+        env: restci
+    publicIPs:
+        - 172.18.17.27

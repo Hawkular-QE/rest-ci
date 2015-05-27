@@ -1,0 +1,11 @@
+{
+  "id": "hawk-ci1-results",
+  "kind": "Service",
+  "apiVersion": "v1beta1",
+  "port": 38091,
+  "containerPort": results-web,
+  "selector": {
+    "name": "hawk-smoke-ci1"
+  },
+  "publicIPs": ["172.18.17.18"] 
+}

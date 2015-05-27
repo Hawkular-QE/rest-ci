@@ -1,0 +1,15 @@
+kind: Pod
+apiVersion: v1beta3
+spec:  
+    containers: 
+    -   name: hawkular-ci1
+        image: hawkular/hawkular:latest
+        imagePullPolicy: Always
+        ports: 
+        -   name: hawkular-web 
+            containerPort: 8080
+metadata:
+    name: hawk-smoke-ci1
+    labels:
+        app: hawk
+        env: restci
