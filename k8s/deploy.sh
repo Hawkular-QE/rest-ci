@@ -12,7 +12,7 @@ status=$?
 
 POD_ID=$(kubectl get pods -l "name=hawkular, env=qe1"  -o template --template='{{(index .items 0).metadata.name}}')
 
-echo "############################ Summary ############################
+printf "\n############################ Summary ############################\n\n"
 
 kubectl describe pods/${POD_ID}
 
