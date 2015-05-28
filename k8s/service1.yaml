@@ -2,15 +2,15 @@ apiVersion: v1beta3
 kind: Service
 metadata:
   labels:
-    name: hawkular-qe
-    env: rest-ci
-  name: hawkular-qe
+    name: hawkular
+    env: qe1 
+  name: hawkular
 spec:
   ports:
     - port: 19090
       targetPort: 8080
   selector:
     name: hawkular
-    env: rest-ci    
+    env: qe1    
   publicIPs:
     - 172.18.17.27
