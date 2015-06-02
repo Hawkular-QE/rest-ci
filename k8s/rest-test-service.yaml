@@ -1,0 +1,16 @@
+apiVersion: v1beta3
+kind: Service
+metadata:
+  labels:
+    name: hawkulartest
+    env: restsmoke1
+  name: hawkulartest
+spec:
+  ports:
+    - port: 19091
+      targetPort: 80
+  selector:
+    name: hawkulartest
+    env: restsmoke1
+  publicIPs:
+    - 172.18.17.27
