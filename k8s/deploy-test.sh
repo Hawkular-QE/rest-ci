@@ -14,6 +14,8 @@ sleep 10s
 wget --retry-connrefused  --timeout=10 -t 10  -w 5 --spider ${HAWKULAR_ENDPOING-http://209.132.179.82:19091/.completed}
 status=$?
 
-kubectl log ${RC_ID} restmoke1 
+POD_ID=$(kubectl get pods -l "name=hawkulartest, env=testsmoke1"  -o template --template='{{(index .items 0).metadata.name}}')
+
+kubectl log ${POD_ID} restmoke1 
 
 exit $status
