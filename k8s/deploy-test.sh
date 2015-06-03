@@ -21,7 +21,7 @@ kubectl get pods -l "${APP_LABEL}" -o template --template='{{(index .items 0).st
 POD_ID=$(kubectl get pods -l "${APP_LABEL}"  -o template --template='{{(index .items 0).metadata.name}}')
 kubectl log -f ${POD_ID} restsmoke1 &
 
-#wget  --retry-connrefused  --timeout=10 -t 20  -w 5 --spider ${HAWKULAR_ENDPOINT:-http://209.132.179.82:19091/.completed}
-#status=$?
+wget --quiet  --retry-connrefused  --timeout=10 -t 20  -w 5 --spider http://209.132.179.82:19091/.completed
+status=$?
 
-#exit $status
+exit $status
