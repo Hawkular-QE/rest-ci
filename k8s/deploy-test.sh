@@ -23,3 +23,4 @@ kubectl log -f ${POD_ID} restsmoke1 &
 
 wget --quiet  --retry-connrefused  --timeout=10 -t 20  -w 5 --spider http://209.132.179.82:19091/.completed
 
+exit 0
