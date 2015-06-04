@@ -4,6 +4,8 @@
 : ${APP_PREDELAY:=15s}
 : ${HAWKULAR_TEST_ENDPOINT:=http://209.132.179.82:18081}
 
+echo "Deleting old pod... label: ${APP_LABEL}"
+
 RC_ID=$(kubectl get rc -l "${APP_LABEL}" -o template --template='{{(index .items 0).metadata.name}}')
 kubectl resize --replicas=0 rc ${RC_ID}
 
@@ -19,19 +21,7 @@ POD_ID=$(kubectl get pods -l "${APP_LABEL}"  -o template --template='{{(index .i
 
 echo "Waiting for pod to be in Running state"
 
-NEXT_WAIT_TIME=0
-while [ $NEXT_WAIT_TIME -lt 240 ]; do
-   POD_PHASE=$(kubectl get pods ${POD_ID} -o template --template='{{.status.phase}}')
-   if [ "x${POD_PHASE}" == "xRunning" ]; then
-      break
-   fi  
-
-   NEXT_WAIT_TIME=$((NEXT_WAIT_TIME+5))
-   sleep 5s
-   printf ". "
-done
-
-printf "\n"
+./wait_for_pod.sh ${POD_ID}
 
 kubectl log -f ${POD_ID} restsmoke1 &
 LOG_ID=$!

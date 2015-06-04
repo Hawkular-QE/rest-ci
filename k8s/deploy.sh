@@ -14,7 +14,9 @@ kubectl resize --replicas=1 rc ${RC_ID}
 sleep 5s
 POD_ID=$(kubectl get pods -l "${APP_LABEL}"  -o template --template='{{(index .items 0).metadata.name}}')
 
-echo "Pod status: $(timeout 30 kubectl get pods ${POD_ID} -o template --template='{{.status.phase}}' --watch=true)"
+echo "Wating for pod to be in Running state"
+
+./wait_for_pod.sh ${POD_ID}
 
 kubectl log -f ${POD_ID} &
 LOG_PID=$!
