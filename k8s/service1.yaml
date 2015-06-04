@@ -3,14 +3,14 @@ kind: Service
 metadata:
   labels:
     name: hawkular
-    env: qe1 
+    env: snapshot
   name: hawkular
 spec:
   ports:
-    - port: 19090
+    - port: 18080
       targetPort: 8080
   selector:
     name: hawkular
-    env: qe1    
+    env: snapshot
   publicIPs:
     - 172.18.17.27
