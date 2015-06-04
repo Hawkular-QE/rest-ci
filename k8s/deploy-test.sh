@@ -36,7 +36,12 @@ printf "\n"
 kubectl log -f ${POD_ID} restsmoke1 &
 LOG_ID=$!
 
-wget --quiet  --retry-connrefused  --timeout=10 -t 20  -w 5 --spider ${HAWKULAR_TEST_ENDPOINT}/.completed
-
+while true; do 
+   timeout 240 wget --quiet  --retry-connrefused  --timeout=10 -t 20  -w 5 --spider ${HAWKULAR_TEST_ENDPOINT}/testng-results.xml
+   if [ $? -eq 0 ]; then
+      break
+   fi
+   sleep 5s
+done
 kill -9 ${LOG_ID}
 exit 0
