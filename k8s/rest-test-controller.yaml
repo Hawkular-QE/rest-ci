@@ -27,7 +27,7 @@ spec:
             - name: WAIT_TRIES
               value: "50"
             - name: HAWKULAR_ENDPOINT
-              value: http://209.132.179.82:19090
+              value: http://209.132.179.82:18080
           volumeMounts:
             - mountPath: /reports
               name: "reports"
