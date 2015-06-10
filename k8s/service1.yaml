@@ -6,6 +6,7 @@ metadata:
     env: snapshot
   name: hawkular
 spec:
+  type: NodePort
   ports:
     - port: 18080
       targetPort: 8080
