@@ -21,13 +21,9 @@ echo "Wating for pod to be in Running state"
 kubectl log -f ${POD_ID} &
 LOG_PID=$!
 
-wget --no-verbose --retry-connrefused  --timeout=10 -t 50  -w 5 --spider ${HAWKULAR_ENDPOINT-http://209.132.179.82:18080}
+./health_check.sh ${HAWKULAR_ENDPOINT}
 status=$?
 
 kill -9 ${LOG_PID}
-
-printf "\n############################ Summary ############################\n\n"
-
-kubectl describe pods/${POD_ID}
 
 exit $status

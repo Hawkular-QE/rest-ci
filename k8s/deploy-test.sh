@@ -29,7 +29,7 @@ kubectl log -f ${POD_ID} ${CONTAINER_ID} &
 LOG_ID=$!
 
 
-./wait_for_test.sh
+./health_check.sh ${HAWKULAR_TEST_RESULTS_ENDPOINT}/testng-results.xml
 
 kill -9 ${LOG_ID}
 exit 0
