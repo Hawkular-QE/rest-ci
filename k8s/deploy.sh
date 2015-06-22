@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ -z ${HAWKULAR_ENDPOINT} ]; then
+   echo "Missing HAWKULAR_ENDPOINT env"
+   exit 1
+fi
+
 : ${APP_LABEL:=name=hawkular, env=snapshot}
 echo "Deleting pods... label: ${APP_LABEL}"
 
