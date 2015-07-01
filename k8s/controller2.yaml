@@ -22,9 +22,6 @@ spec:
       containers:
         - name: hawkular
           image: hawkular/hawkular:latest
-          resources:
-            limits:
-              cpu: 2
           ports:
             - containerPort: 8080
           livenessProbe:
