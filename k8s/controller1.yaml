@@ -22,6 +22,9 @@ spec:
       containers:
         - name: hawkular
           image: hawkular/hawkular:latest
+          env:
+            - name: TEST_MODE
+              value: true
           ports:
             - containerPort: 8080
           livenessProbe:
