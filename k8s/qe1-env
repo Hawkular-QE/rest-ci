@@ -6,5 +6,5 @@ export APP_POST_DEPLOY_DELAY
 export KUBE_RC="controller2.yaml"
 
 export PUBLIC_PORT=18085
-export NODE_IP=172.18.17.30
+export NODE_IP=172.18.17.37
 export HAWKULAR_ENDPOINT=http://${NODE_IP}:${PUBLIC_PORT}
