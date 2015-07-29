@@ -1,6 +1,7 @@
 export APP_NAME=hawkular
 export APP_ENV=snapshot
 export APP_LABEL="name=${APP_NAME},env=${APP_ENV}"
+
 export SERVICE_NAME="${APP_NAME}-${APP_ENV}"
 
 : ${APP_POST_DEPLOY_DELAY:=15s}
@@ -9,4 +10,3 @@ export APP_POST_DEPLOY_DELAY
 export KUBE_RC="controller1.yaml"
 
 export EXT_PORT=30080
-export HAWKULAR_ENDPOINT=http://${NODE_IP}:${PUBLIC_PORT}

@@ -35,11 +35,16 @@ POD_ID=$(kubectl get pods -l "${APP_LABEL}"  -o template --template='{{(index .i
 echo "Wating for pod to be in Running state"
 
 ./wait_for_pod.sh ${POD_ID}
+HOST_IP=$(kubectl get pods "${POD_ID}" -o template --template='{{.status.hostIP}}')
+
+echo "Pod deployed to ${HOST_IP}"
 
 kubectl log -f ${POD_ID} &
 LOG_PID=$!
 
-./health_check.sh ${HAWKULAR_ENDPOINT}
+ENDPOINT=${HOST_IP}:${EXT_PORT}
+./health_check.sh ${ENDPOINT}
+
 status=$?
 
 kill -9 ${LOG_PID}
