@@ -1,17 +1,16 @@
-apiVersion: v1beta3
+apiVersion: v1
 kind: Service
 metadata:
   labels:
     name: hawkular
-    env: snapshot
+    env: demo
   name: hawkular
 spec:
-  type: NodePort
+  type: "NodePort"
   ports:
-    - port: 18080
+    - port: 80
       targetPort: 8080
+      nodePort: 30085
   selector:
     name: hawkular
     env: snapshot
-  publicIPs:
-    - 172.18.17.27

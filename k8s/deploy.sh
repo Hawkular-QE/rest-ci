@@ -15,9 +15,8 @@ if [ "$1" == "reset" ]; then
 
    sleep 5s
    RC_ID=$(kubectl get rc -l "${APP_LABEL}" -o template --template='{{(index .items 0).metadata.name}}')
-   echo "Creating service for rc ${RC_ID}..."
-   kubectl expose rc ${RC_ID} --port=${PUBLIC_PORT} --target-port=8080  --public-ip=${NODE_IP}
-   kubectl label --overwrite services ${RC_ID} ${APP_LABEL//,/ }
+   echo "Creating service ${SERVICE_NAME}..."
+   python service.py | kubectl create --validate -f -
 else
    # preconditions: Pod and RC have been running already from previous run
    echo "Deleting pods..."
@@ -27,8 +26,8 @@ fi
 
 sleep 5s
 
-echo "Deploying..."
-kubectl resize --replicas=1 rc ${RC_ID}
+echo "Deploying (scaling rc ${RC_ID} to 1 instance) ..."
+kubectl scale --replicas=1 rc ${RC_ID}
 
 sleep 5s
 POD_ID=$(kubectl get pods -l "${APP_LABEL}"  -o template --template='{{(index .items 0).metadata.name}}')
