@@ -40,7 +40,7 @@ HOST_IP=$(kubectl get pods "${POD_ID}" -o template --template='{{.status.hostIP}
 echo "Pod deployed to ${HOST_IP}"
 echo "~~~~~ App stdout begins ~~~~"
 
-kubectl logs -f ${POD_ID} &
+kubectl logs -f ${POD_ID} hawkular &
 LOG_PID=$!
 
 ENDPOINT=${HOST_IP}:${EXT_PORT}
