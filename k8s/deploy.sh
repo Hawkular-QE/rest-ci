@@ -35,6 +35,11 @@ POD_ID=$(kubectl get pods -l "${APP_LABEL}"  -o template --template='{{(index .i
 echo "Wating for pod to be in Running state"
 
 ./wait_for_pod.sh ${POD_ID}
+
+if [ $? -ne 0 ]; then
+   exit 1
+fi
+
 HOST_IP=$(kubectl get pods "${POD_ID}" -o template --template='{{.status.hostIP}}')
 
 echo "Pod deployed to ${HOST_IP}"

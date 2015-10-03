@@ -4,7 +4,7 @@ if [ -z $1 ]; then
    exit 1
 fi
 
-: ${POD_TIMEOUT:=600}
+: ${POD_TIMEOUT:=900}
 POD_ID=$1
 NEXT_WAIT_TIME=0
 while [ $NEXT_WAIT_TIME -lt ${POD_TIMEOUT} ]; do
@@ -18,4 +18,5 @@ while [ $NEXT_WAIT_TIME -lt ${POD_TIMEOUT} ]; do
    printf ". "
 done
 printf "\n"
+echo "Pod ${POD_ID} failed to start in ${POD_TIMEOUT}s"
 exit 1
