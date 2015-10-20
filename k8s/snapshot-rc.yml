@@ -38,4 +38,4 @@ spec:
             initialDelaySeconds: 480
             timeoutSeconds: 10
         - name: cassandra
-          image: cassandra:2.1
+          image: cassandra:2.2
