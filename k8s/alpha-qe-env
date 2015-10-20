@@ -1,0 +1,12 @@
+export APP_NAME=hawkular
+export APP_ENV=alpha
+export APP_LABEL="name=${APP_NAME},env=${APP_ENV}"
+
+export SERVICE_NAME="${APP_NAME}-${APP_ENV}"
+
+: ${APP_POST_DEPLOY_DELAY:=15s}
+export APP_POST_DEPLOY_DELAY
+
+export KUBE_RC="alpha-qe-rc.yml"
+
+export EXT_PORT=30090
