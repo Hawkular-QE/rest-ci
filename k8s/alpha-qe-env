@@ -9,4 +9,4 @@ export APP_POST_DEPLOY_DELAY
 
 export KUBE_RC="alpha-qe-rc.yml"
 
-export EXT_PORT=30090
+export EXT_PORT=30095
