@@ -39,7 +39,8 @@ spec:
             timeoutSeconds: 10
         - name: cassandra
           image: cassandra:2.2
-          command:- bash
+          command:
+          - bash
           - "-c"
           - "sed -i 's/^start_rpc.*$/start_rpc: true/' /etc/cassandra/cassandra.yaml; /docker-entrypoint.sh -f"
           env:
