@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: hawkular
-          image: hawkular/hawkular:alpha5
+          image: hawkular/hawkular:alpha6
           env:
             - name: TEST_MODE
               value: "true"
@@ -40,10 +40,10 @@ spec:
         - name: cassandra
           image: cassandra:2.2
           command:
-          - bash
-          - "-c"
-          - "sed -i 's/^start_rpc.*$/start_rpc: true/' /etc/cassandra/cassandra.yaml; /docker-entrypoint.sh -f"
+            - bash
+            - "-c"
+            - "sed -i 's/^start_rpc.*$/start_rpc: true/' /etc/cassandra/cassandra.yaml; /docker-entrypoint.sh -f"
           env:
-          - name: CASSANDRA_LISTEN_ADDRESS
-          value: 127.0.0.1
-          
+            - name: CASSANDRA_LISTEN_ADDRESS
+              value: 127.0.0.1
+
