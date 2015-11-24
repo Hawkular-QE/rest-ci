@@ -30,7 +30,7 @@ spec:
             # Required for KeyCloak
             # Change to server on which Hawkular will be running
             - name: HAWKULAR_URL
-            value: localhost:8080
+              value: localhost:8080
           ports:
             - containerPort: 8080
           livenessProbe:
