@@ -1,4 +1,4 @@
-apiVersion: v1beta3
+apiVersion: v1
 kind: ReplicationController
 metadata:
   name: snapshot-rc
@@ -30,7 +30,7 @@ spec:
             # Required for KeyCloak
             # Change to server on which Hawkular will be running
             - name: HAWKULAR_URL
-              value: localhost:8080
+              value: livingontheedge.hawkular.org
           ports:
             - containerPort: 8080
           livenessProbe:
