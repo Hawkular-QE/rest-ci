@@ -9,9 +9,7 @@ spec:
   type: "NodePort"
   ports:
     - port: 80
-      targetPort: 9160
-#      targetPort: 7000
-#      nodePort: 30086
+      targetPort: 9042
   selector:
     name: cassandra
     env: alpha
