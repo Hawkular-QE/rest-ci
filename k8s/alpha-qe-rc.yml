@@ -21,11 +21,11 @@ spec:
     spec:
       containers:
         - name: hawkular
-          image: hawkular/hawkular:alpha9
+          image: hawkular/hawkular:alpha9proto2
           env:
             - name: TEST_MODE
               value: "true"
-            - name: CASSANDRA_NODE
+            - name: CASSANDRA_SERVICE
               value: cassandra
             # value: 127.0.0.1
             # Required for KeyCloak

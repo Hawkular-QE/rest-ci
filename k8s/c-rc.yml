@@ -28,10 +28,11 @@ spec:
             - "sed -i 's/^start_rpc.*$/start_rpc: true/' /etc/cassandra/cassandra.yaml; /docker-entrypoint.sh -f"
           ports:
             # https://wiki.apache.org/cassandra/FAQ#ports
-            - containerPort: 9042
-              name: cql
+            #- containerPort: 9042
+            #  name: cql
             #- containerPort: 7000
-            #- containerPort: 9160
+            - containerPort: 9160
+              name: thrift
           #env:
             #- name: CASSANDRA_LISTEN_ADDRESS
               #value: 127.0.0.1
