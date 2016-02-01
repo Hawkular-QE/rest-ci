@@ -27,7 +27,6 @@ spec:
             - "-c"
             - "sed -i 's/^start_rpc.*$/start_rpc: true/' /etc/cassandra/cassandra.yaml; /docker-entrypoint.sh -f"
           ports:
-            # "By default, Cassandra uses 7000 for cluster communication"
             # https://wiki.apache.org/cassandra/FAQ#ports
             - containerPort: 9042
               name: cql
