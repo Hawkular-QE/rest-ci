@@ -24,26 +24,34 @@ if [ "${RESET}" == "reset" ] || [ "${RESET}" == "full-reset" ]; then
 
    if [ "${RESET}" == "full-reset" ]; then
       echo "Resetting Cassandra..."
-      kubectl delete -f ${CASSANDRA_KUBE_RC}
+      kubectl delete -f `pwd`/${CASSANDRA_KUBE_RC}
       kubectl delete pods -l "${CASSANDRA_APP_LABEL}"
       kubectl delete service -l "${CASSANDRA_APP_LABEL}"
+      echo "Creating Cassandra replication controller..."
+      kubectl --validate create -f ${CASSANDRA_KUBE_RC}
 
       sleep 5s
-      echo "Creating service ${CASSANDRA_SERVICE_NAME}..."
-      kubectl create -f ${CASSANDRA_KUBE_SERVICE}
+      echo "Creating service ${CASSANDRA_KUBE_SERVICE}..."
+      kubectl create -f `pwd`/${CASSANDRA_KUBE_SERVICE}
       CASSANDRA_RC_ID=$(kubectl get rc -l "${CASSANDRA_APP_LABEL}" -o template --template='{{(index .items 0).metadata.name}}')
    fi
 else
    # Deploy only Hawkular, and not Cassandra
    # preconditions: Pod and RC have been running already from previous run
-   echo "Deleting pods..."
+   echo "Deleting Hawkular pods..."
    RC_ID=$(kubectl get rc -l "${APP_LABEL}" -o template --template='{{(index .items 0).metadata.name}}')
    kubectl scale --replicas=0 rc ${RC_ID}
+
+   if [ "${RESET}" != "hawkular-restart" ]; then
+      echo "Deleting Cassandra pods..."
+      CASSANDRA_RC_ID=$(kubectl get rc -l "${APP_LABEL}" -o template --template='{{(index .items 0).metadata.name}}')
+      kubectl scale --replicas=0 rc ${CASSANDRA_RC_ID}
+   fi
 fi
 
 sleep 5s
 
-if [ "${RESET}" == "full-reset" ]; then
+if [ "${RESET}" != "hawkular-restart" ]; then
    echo "Deploying (scaling rc ${CASSANDRA_RC_ID} to 1 instance) ..."
    kubectl scale --replicas=1 rc ${CASSANDRA_RC_ID}
 
@@ -58,6 +66,9 @@ if [ "${RESET}" == "full-reset" ]; then
       exit 1
    fi
 fi
+
+#echo "Exiting..."
+#exit
 
 echo "Deploying (scaling rc ${RC_ID} to 1 instance) ..."
 kubectl scale --replicas=1 rc ${RC_ID}

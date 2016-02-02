@@ -14,7 +14,7 @@ export EXT_PORT=30080
 # Cassandra
 export CASSANDRA_APP_NAME=cassandra
 export CASSANDRA_APP_ENV=snapshot
-export CASSANDRA_APP_LABEL="${CASSANDRA_APP_NAME},${CASSANDRA_APP_ENV}"
+export CASSANDRA_APP_LABEL="env=${CASSANDRA_APP_ENV},name=${CASSANDRA_APP_NAME}"
 export CASSANDRA_KUBE_SERVICE="cassandra-snapshot-service.yml"
 export CASSANDRA_KUBE_RC="cassandra-snapshot-rc.yml"
 
