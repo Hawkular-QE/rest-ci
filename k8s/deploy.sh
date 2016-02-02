@@ -67,9 +67,6 @@ if [ "${RESET}" != "hawkular-restart" ]; then
    fi
 fi
 
-#echo "Exiting..."
-#exit
-
 echo "Deploying (scaling rc ${RC_ID} to 1 instance) ..."
 kubectl scale --replicas=1 rc ${RC_ID}
 
