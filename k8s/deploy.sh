@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# "reset" = Reset only Hawkular
-# "full-reset" = Reset Cassandra and Hawkular
+# "hawkular-restart" = Restart Hawkular, only.
+# "reset" = Full reset on Hawkular, only.
+# "full-reset" = Full reset on Hawkular and Cassandra
 RESET=$1
 
 if [ -z ${APP_LABEL} ]; then
