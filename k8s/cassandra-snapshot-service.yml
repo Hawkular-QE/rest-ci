@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: cassandra
+    env: snapshot
+  name: cassandra
+spec:
+  # type: "NodePort"
+  ports:
+    - port: 9042
+      name: cql
+      targetPort: 9042
+    - port: 9160
+      name: thrift
+      targetPort: 9160
+  selector:
+    name: cassandra
+    env: snapshot

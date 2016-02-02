@@ -25,8 +25,8 @@ spec:
           env:
             - name: TEST_MODE
               value: "true"
-            - name: CASSANDRA_NODES
-              value: 127.0.0.1
+            - name: CASSANDRA_SERVICE
+              value: cassandra
             # Required for KeyCloak
             # Change to server on which Hawkular will be running
             - name: HAWKULAR_URL
@@ -41,12 +41,3 @@ spec:
             # after pod startup, before applying health checking
             initialDelaySeconds: 480
             timeoutSeconds: 10
-        - name: cassandra
-          image: cassandra:2.2
-          command:
-            - bash
-            - "-c"
-            - "sed -i 's/^start_rpc.*$/start_rpc: true/' /etc/cassandra/cassandra.yaml; /docker-entrypoint.sh -f" 
-          env:
-            - name: CASSANDRA_LISTEN_ADDRESS
-              value: 127.0.0.1
