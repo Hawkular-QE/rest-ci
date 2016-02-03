@@ -37,7 +37,6 @@ if [ "${RESET}" == "reset" ] || [ "${RESET}" == "full-reset" ]; then
       CASSANDRA_RC_ID=$(kubectl get rc -l "${CASSANDRA_APP_LABEL}" -o template --template='{{(index .items 0).metadata.name}}')
    fi
 else
-   # Deploy only Hawkular, and not Cassandra
    # preconditions: Pod and RC have been running already from previous run
    echo "Deleting Hawkular pods..."
    RC_ID=$(kubectl get rc -l "${APP_LABEL}" -o template --template='{{(index .items 0).metadata.name}}')
