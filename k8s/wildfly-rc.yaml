@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: wildfly-lote 
+  name: wildfly-lote
+spec:
+  replicas: 2
+  selector:
+    name: wildfly-lote
+  template:
+    metadata:
+      labels:
+        name: wildfly-lote
+    spec:
+      containers:
+        - image: docker.io/hawkular/wildfly-monitoring-agent
+          env:
+            - name: HAWKULAR_SERVER
+              value: http://livingontheedge.hawkular.org
+          name: wildfly
