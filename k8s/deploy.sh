@@ -16,11 +16,11 @@ if [ "${RESET}" == "reset" ] || [ "${RESET}" == "full-reset" ]; then
    kubectl delete pods -l "${APP_LABEL}"
    kubectl delete service -l "${APP_LABEL}"
    echo "Creating replication controller..."
-   kubectl --validate create -f ${KUBE_RC}
+   kubectl create -f ${KUBE_RC}
 
    sleep 5s
    echo "Creating service ${SERVICE_NAME}..."
-   python service.py | kubectl create --validate -f -
+   python service.py | kubectl create -f -
    RC_ID=$(kubectl get rc -l "${APP_LABEL}" -o template --template='{{(index .items 0).metadata.name}}')
 
    if [ "${RESET}" == "full-reset" ]; then
@@ -29,7 +29,7 @@ if [ "${RESET}" == "reset" ] || [ "${RESET}" == "full-reset" ]; then
       kubectl delete pods -l "${CASSANDRA_APP_LABEL}"
       kubectl delete service -l "${CASSANDRA_APP_LABEL}"
       echo "Creating Cassandra replication controller..."
-      kubectl --validate create -f ${CASSANDRA_KUBE_RC}
+      kubectl create -f ${CASSANDRA_KUBE_RC}
 
       sleep 5s
       echo "Creating service ${CASSANDRA_KUBE_SERVICE}..."
