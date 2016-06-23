@@ -6,7 +6,7 @@ metadata:
   annotations:
     description: A ManageIQ appliance
     iconClass: icon-app-code
-    tags: quickstart,manageiq,miq
+    tags: instant-app,quickstart,manageiq,miq
   creationTimestamp: null
   name: manageiq
 objects:
@@ -48,11 +48,15 @@ objects:
       name: ${NAME}
     strategy:
       type: Rolling
+      rollingParams:
+         timeoutSeconds: 960
     template:
       metadata:
         labels:
           name: ${NAME}
         name: ${NAME}
+        annotations:
+          openshift.io/scc: privileged
       spec:
        containers:
         - image: docker.io/manageiq/manageiq 
@@ -60,17 +64,19 @@ objects:
             httpGet:
               path: /
               port: 80
-            initialDelaySeconds: 1200 
+            initialDelaySeconds: 600
             timeoutSeconds: 3
           name: manageiq
           ports:
           - containerPort: 80
           - containerPort: 443 
+          securityContext:
+            privileged: true
           readinessProbe:
             httpGet:
               path: /
               port: 80
-            initialDelaySeconds: 1200
+            initialDelaySeconds: 600
             timeoutSeconds: 3
           resources:
             limits:
