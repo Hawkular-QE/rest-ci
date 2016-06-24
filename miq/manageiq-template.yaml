@@ -7,7 +7,6 @@ metadata:
     description: A ManageIQ appliance
     iconClass: icon-app-code
     tags: instant-app,quickstart,manageiq,miq
-  creationTimestamp: null
   name: manageiq
 objects:
 - apiVersion: v1
@@ -31,16 +30,18 @@ objects:
   metadata:
     name: ${NAME}
   spec:
-    host: ${APPLICATION_DOMAIN}
     to:
       kind: Service
       name: ${NAME}
+    port:
+      targetPort: https
+    tls:
+      termination: passthrough  
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
     annotations:
       description: Defines how to deploy the application server
-      openshift.io/scc: privileged
     name: ${NAME}
   spec:
     replicas: 1
@@ -55,8 +56,6 @@ objects:
         labels:
           name: ${NAME}
         name: ${NAME}
-        annotations:
-          openshift.io/scc: privileged
       spec:
        containers:
         - image: docker.io/manageiq/manageiq 
