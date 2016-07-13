@@ -4,7 +4,7 @@ labels:
   template: manageiq
 metadata:
   annotations:
-    description: A ManageIQ appliance
+    description: A template for creating ManageIQ appliance
     iconClass: icon-app-code
     tags: instant-app,quickstart,manageiq,miq
   name: manageiq
@@ -80,6 +80,20 @@ objects:
           resources:
             limits:
               memory: ${MEMORY_LIMIT}
+          volumeMounts:
+          - name: psql-data
+            mountPath: "/var/opt/rh/rh-postgresql94/lib/pgsql/data"
+          lifecycle:
+            postStart:
+              exec:
+                command:          
+                - chown 
+                - "-R"
+                - "postgres"
+                - "/var/opt/rh/rh-postgresql94/lib/pgsql/data" 
+       volumes:
+        - name: psql-data
+          emptyDir: {}
 parameters:
 - description: The name assigned to all of the frontend objects defined in this template.
   displayName: Name
@@ -89,7 +103,7 @@ parameters:
 - description: Maximum amount of memory the container can use.
   displayName: Memory Limit
   name: MEMORY_LIMIT
-  value: 2048Mi
+  value: 4096Mi
 - description: The exposed hostname that will route to the ManageIQ service, if left
     blank a value will be defaulted.
   displayName: Application Hostname
