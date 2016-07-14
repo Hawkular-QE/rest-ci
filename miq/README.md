@@ -1,4 +1,4 @@
-Deploy ManageIQ in Kubernetes 
+Deploy ManageIQ on Kubernetes 
 ==
 Create external service
 ```
@@ -9,7 +9,7 @@ Create replication controller
 # kubectl create -f miq-rc.yml
 ```
 
-Deploy ManageIQ in OpenShift v3 
+Deploy ManageIQ on OpenShift v3 
 ==
 1. In your own namespace
 
