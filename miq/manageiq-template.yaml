@@ -23,6 +23,9 @@ objects:
     - name: https
       port: 443
       targetPort: 443
+    - name: psql
+      port: 5432
+      targetPort: 5432
     selector:
       name: ${NAME}
 - apiVersion: v1
@@ -37,6 +40,16 @@ objects:
       targetPort: https
     tls:
       termination: passthrough  
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: ${NAME}-psql
+  spec:
+    to:
+      kind: Service
+      name: ${NAME}
+    port:
+      targetPort: psql
 - apiVersion: v1
   kind: DeploymentConfig
   metadata:
@@ -69,6 +82,7 @@ objects:
           ports:
           - containerPort: 80
           - containerPort: 443 
+          - containerPort: 5432
           securityContext:
             privileged: true
           readinessProbe:
@@ -82,7 +96,7 @@ objects:
               memory: ${MEMORY_LIMIT}
           volumeMounts:
           - name: psql-data
-            mountPath: "/var/opt/rh/rh-postgresql94/lib/pgsql/data"
+            mountPath: "/var/opt/rh/rh-postgresql95/lib/pgsql/data"
           lifecycle:
             postStart:
               exec:
@@ -90,7 +104,7 @@ objects:
                 - chown 
                 - "-R"
                 - "postgres"
-                - "/var/opt/rh/rh-postgresql94/lib/pgsql/data" 
+                - "/var/opt/rh/rh-postgresql95/lib/pgsql/data"
        volumes:
         - name: psql-data
           emptyDir: {}
