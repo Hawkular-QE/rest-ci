@@ -20,24 +20,22 @@ spec:
         env: snapshot
     spec:
       containers:
-        - name: hawkular
-          image: hawkular/hawkular:latest
-          env:
-            - name: TEST_MODE
-              value: "true"
-            - name: CASSANDRA_SERVICE
-              value: cassandra
-            # Required for KeyCloak
-            # Change to server on which Hawkular will be running
-            - name: HAWKULAR_URL
-              value: livingontheedge.hawkular.org
+        - image: docker.io/hawkularqe/hawkular-services:latest
+          name: hawkular
           ports:
-            - containerPort: 8080
+          - containerPort: 8080
+          env:
+          - 
+            name: TEST_MODE
+            value: "true"
+          -
+            name: CASSANDRA_SERVICE
+            value: "cassandra"
+          -
+            name: DB_TIMEOUT
+            value: "480" 
           livenessProbe:
             httpGet:
-              path: /
+              path: /hawkular/metrics/status
               port: 8080
-            # length of time to wait for a pod to initialize
-            # after pod startup, before applying health checking
-            initialDelaySeconds: 480
-            timeoutSeconds: 10
+            initialDelaySeconds: 360
