@@ -21,15 +21,14 @@ spec:
     spec:
       containers:
         - name: cassandra
-          image: cassandra:2.2
-          command:
-            - bash
-            - "-c"
-            - "sed -i 's/^start_rpc.*$/start_rpc: true/' /etc/cassandra/cassandra.yaml; /docker-entrypoint.sh -f"
+          image: cassandra:3.7
           ports:
             # https://wiki.apache.org/cassandra/FAQ#ports
             - containerPort: 9042
               name: cql
             - containerPort: 9160
               name: thrift
-
+          env:
+          -
+            name: CASSANDRA_START_RPC
+            value: "true"

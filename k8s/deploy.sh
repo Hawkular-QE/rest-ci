@@ -90,7 +90,7 @@ kubectl logs -f ${POD_ID} hawkular &
 LOG_PID=$!
 
 ENDPOINT=${HOST_IP}:${EXT_PORT}
-./health_check.sh ${ENDPOINT}
+./health_check.sh ${ENDPOINT}/hawkular/metrics/status
 
 status=$?
 
