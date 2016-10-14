@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: cassandra
-          image: cassandra:3.7
+          image: hawkularqe/cassandra:latest
           ports:
             # https://wiki.apache.org/cassandra/FAQ#ports
             - containerPort: 9042
@@ -32,3 +32,25 @@ spec:
           -
             name: CASSANDRA_START_RPC
             value: "true"
+          -
+            name: MAX_HEAP_SIZE
+            value: "1024M"
+          readinessProbe:
+            exec:
+              command: ['nodetool', 'status']
+            initialDelaySeconds: 60
+            timeoutSeconds: 10
+            periodSeconds: 5
+            successThreshold: 2
+            failureThreshold: 12
+          livenessProbe:
+            exec:
+              command: ['nodetool', 'status']
+            initialDelaySeconds: 180
+            timeoutSeconds: 10
+            periodSeconds: 15
+            successThreshold: 1
+            failureThreshold: 3
+          resources:
+            limits:
+              memory: 2Gi
